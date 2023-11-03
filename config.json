@@ -1,0 +1,30 @@
+{
+    "奖项": [
+        {
+            "name": "特等奖",
+            "count": 0,
+            "persions": []
+        },
+        {
+            "name": "一等奖",
+            "count": 0,
+            "persions": []
+        },
+        {
+            "name": "二等奖",
+            "count": 0,
+            "persions": []
+        },
+        {
+            "name": "三等奖",
+            "count": 0,
+            "persions": []
+        },
+        {
+            "name": "四等奖",
+            "count": 0,
+            "persions": []
+        }
+    ],
+    "中獎人員名單": []
+}
