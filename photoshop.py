@@ -58,6 +58,8 @@ def loadimages() -> list:
         configs = load(f)
     excludelist = configs['中獎人員名單']
     folderpath = Path('Photos')
+    if not folderpath.exists():
+        folderpath.mkdir()
     pictures =[str(folderpath / _) for _ in listdir(folderpath)]
     for exclude in excludelist:
         if exclude in pictures:
@@ -68,4 +70,3 @@ def loadimages() -> list:
 
 if __name__ == '__main__':
     loadimages2()
-
