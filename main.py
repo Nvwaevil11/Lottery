@@ -69,7 +69,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainForm):
                 'border-width:1px;border-style:solid;border-color: rgb(self._blockWidth,self._blockWidth,'
                 'self._blockWidth)')
 
-
     def init_menus(self):
         i = 0
         for prize in self.prizes:
@@ -86,7 +85,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainForm):
             self.menu_prizes.addAction(action)
             action.setChecked(True)
         self.menuBar().setVisible(False)
-
 
     def prizemenuchange(self):
         if self.sender().isChecked():
@@ -587,7 +585,6 @@ class PrizeForm(prizeshow.Ui_Dialog,QtWidgets.QDialog):
 
 if __name__ == '__main__':
     import sys
-
     app = QtWidgets.QApplication(sys.argv)
     main_form = MainWindow()
     sys.exit(app.exec())

@@ -2,27 +2,27 @@
     "奖项": [
         {
             "name": "特等奖",
-            "count": 0,
+            "count": 1,
             "persions": []
         },
         {
             "name": "一等奖",
-            "count": 0,
+            "count": 2,
             "persions": []
         },
         {
             "name": "二等奖",
-            "count": 0,
+            "count": 4,
             "persions": []
         },
         {
             "name": "三等奖",
-            "count": 0,
+            "count": 6,
             "persions": []
         },
         {
             "name": "四等奖",
-            "count": 0,
+            "count": 10,
             "persions": []
         }
     ],
