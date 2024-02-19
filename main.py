@@ -15,7 +15,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainForm):
         self.setupUi(self)
         self.getconfig()
         self.prizes = self.configs.get('奖项')
-
+        
         self.init_menus()
         self._height = 768
         self._width = 1366
@@ -45,18 +45,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainForm):
         self.prizedialog = PrizeDilog(self._width, self._height, self)
         self.bgm = QtMultimedia.QSoundEffect()
         self.bgm.setSource(QtCore.QUrl.fromLocalFile('runing.wav'))
-
+    
     def init_ui(self):
         self.CW.setGeometry(0, 0, self._width, self._height)
         self.frameimage.setGeometry(0, 0, self._width, self._height)
         print(self.imagelist)
         for i in range(len(self.imagelist)):
             photo = str(self.imagelist[i])
-
+            
             lable = QtWidgets.QLabel(f'({photo})', self.frameimage)
             lable.setProperty('imagepath', f'({photo})')
             lable.setGeometry(QtCore.QRect((i % 15) * self._blockWidth, self.yoffset + (i // 15) * self._blockHeight,
-                            self._blockWidth, self._blockHeight))
+                                           self._blockWidth, self._blockHeight))
             lable.setProperty('order', i)
             lable.setProperty('type', 'image')
             lable.setObjectName(f'image{i}')
@@ -68,15 +68,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainForm):
             lable.setStyleSheet(
                 'border-width:1px;border-style:solid;border-color: rgb(self._blockWidth,self._blockWidth,'
                 'self._blockWidth)')
-
+    
     def init_menus(self):
         i = 0
         for prize in self.prizes:
             action = QtWidgets.QWidgetAction(self.menu_prizes)
-            action.setProperty('prizeid',0)
+            action.setProperty('prizeid', 0)
             i += 1
             action.setObjectName(prize['name'])
-            if prize['count'] <=0:
+            if prize['count'] <= 0:
                 action.setEnabled(False)
             action.setText(prize['name'])
             action.setCheckable(True)
@@ -85,7 +85,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainForm):
             self.menu_prizes.addAction(action)
             action.setChecked(True)
         self.menuBar().setVisible(False)
-
+    
     def prizemenuchange(self):
         if self.sender().isChecked():
             self.menu_prizes.setProperty('prize', self.sender().text())
@@ -97,7 +97,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainForm):
             else:
                 self.prizeidx = at.property('prizeid')
                 self.prize = self.configs['奖项'][self.prizeidx]
-
+    
     def keyPressEvent(self, a0: QtGui.QKeyEvent) -> None:
         self.getconfig()
         """
@@ -114,7 +114,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainForm):
             F2:切换为一等奖
             F1:切换为特等奖
         """
-
+        
         if a0.key() == QtCore.Qt.Key.Key_Space:
             self.runorstop()
         if not self.running:
@@ -152,7 +152,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainForm):
                 self.menu_prizes.actions()[0].setChecked(True)
                 self.prizedialog.showMessage(f'切换为{"特等奖"}', 1)
                 self.prizeidx = 0
-
+    
     def clearconfigs(self):
         self.configs = {
             "奖项": [
@@ -192,22 +192,22 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainForm):
         }
         self.setconfig()
         self.getconfig()
-
+    
     def setconfig(self):
         with open('config.json', 'w', encoding='utf-8') as f:
             dump(self.configs, f, ensure_ascii=False, indent=4)
-
+    
     def hiddenimage(self):
         self.frameimage.setPixmap(QtGui.QPixmap('AE2.jpg'))
         for child in self.frameimage.children():
             if child.property('type') == 'image':
                 child.setVisible(False)
-
+    
     def showimage(self):
         for child in self.frameimage.children():
             if child.property('type') == 'image':
                 child.setVisible(True)
-
+    
     def fullscreen(self):
         print('触发全屏')
         if self.isFullScreen():
@@ -224,13 +224,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainForm):
             self.CW.setGeometry(0, 0, self._width, self._height)
             self.frameimage.setGeometry(0, 0, self._width, self._height)
             self.frameimage.setScaledContents(True)
-
+    
     def runorstop(self) -> None:
         self.getconfig()
-
+        
         self.prize = self.configs["奖项"][self.prizeidx]
         if self.prize['count'] <= 0:
-            self.prizedialog.showMessage(f'{self.prize["name"]}已将抽完,请选择其他',1)
+            self.prizedialog.showMessage(f'{self.prize["name"]}已将抽完,请选择其他', 1)
             return
         self.showimage()
         if self.autotimer.isActive():
@@ -244,30 +244,30 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainForm):
             self.autotimer.start()
             self.running = True
             # self.bgm.play()
-
+    
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
         self.CW.resize(a0.size())
         self.frameimage.resize(a0.size())
         if self.isFullScreen():
             self.CW.setGeometry(0, 0, self._width, self._height)
             self.frameimage.setGeometry(0, 0, self._width, self._height)
-
+    
     def showprizes(self):
         self.getconfig()
         self.prizes = self.configs.get('奖项')
         print(self.prizes)
-
+    
     def getconfig(self) -> dict:
         with open(r'config.json', 'r', encoding='utf-8') as f:
             self.configs = load(f)
         return self.configs
-
+    
     def deleimage(self):
         self.loadImage()
-
+    
     def showhelp(self):
         self.prizedialog.showMessage()
-
+    
     def startAnimation2big(self, widget: QtWidgets.QWidget, ratio: float):
         # noinspection PyTypeChecker
         animation = QtCore.QPropertyAnimation(widget, b"geometry", self.CW)
@@ -279,7 +279,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainForm):
             new_y = self._height - self.yoffset - int((ratio * 2 + 0.1) * self._blockHeight)
         else:
             new_y = self.yoffset + (idx // 15) * self._blockHeight - int(ratio * self._blockHeight)
-
+        
         if idx % 15 == 0:
             new_pose = QtCore.QRect(0, new_y,
                                     self._blockWidth + int((ratio * 2) * self._blockWidth),
@@ -292,13 +292,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainForm):
             new_pose = QtCore.QRect((idx % 15) * self._blockWidth - (int(ratio * self._blockWidth)), new_y,
                                     self._blockWidth + int((ratio * 2) * self._blockWidth),
                                     self._blockHeight + int((ratio * 2) * self._blockHeight))
-
+        
         animation.setStartValue(old_pose)
         animation.setEndValue(new_pose)
         animation.setDuration(5)
         animation.start()
         widget.setProperty('sizemode', 'big')
-
+    
     def startAnimation2small(self, widget: QtWidgets.QWidget):
         # noinspection PyTypeChecker
         animation = QtCore.QPropertyAnimation(widget, b"geometry", self.frameimage)
@@ -313,7 +313,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainForm):
         animation.setDuration(5)
         animation.start()
         widget.setProperty('sizemode', 'small')
-
+    
     def startAnimationReset(self, widget: QtWidgets.QWidget):
         # noinspection PyTypeChecker
         animation = QtCore.QPropertyAnimation(widget, b"geometry", self.CW)
@@ -326,7 +326,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainForm):
         animation.setDuration(5)
         animation.start()
         widget.setProperty('sizemode', 'init')
-
+    
     def setAnimation(self):
         # print(datetime.datetime.now())
         if self.actionrandom.isChecked():
@@ -342,7 +342,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainForm):
             currfilename = child.property('imagepath')
             if not currfilename:
                 continue
-
+            
             if self.prizefilename not in child.property('imagepath'):
                 try:
                     self.startAnimation2small(child)
@@ -353,14 +353,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainForm):
                     print(repr(e))
             else:
                 child.raise_()
-
-
+                
                 try:
                     self.startAnimation2big(child, 0.6)
                     child.setStyleSheet('border-width:5px;border-style:solid;border-color: rgb(0,0,255)')
                 except Exception as e:
                     print(repr(e))
-
+    
     def loadImage(self):
         print('导入图片')
         self.imagelist = loadimages()
@@ -375,11 +374,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainForm):
                         self.startAnimationReset(child)
                     else:
                         child.deleteLater()
-
-    def showallprizes(self,prize:dict):
+    
+    def showallprizes(self, prize: dict):
         self.hiddenimage()
         PrizeForm(self._width, self._height, prize, self)
-
+    
     def getscreensize(self):
         screen = QtGui.QGuiApplication.primaryScreen().geometry()
         self._width = screen.width()
@@ -393,6 +392,8 @@ class PrizeDilog(Ui_Dialog, QtWidgets.QDialog):
         print(self.parent().objectName())
         self.picturename = ''
         self.setupUi(self)
+        self.configs = {}
+        self.prize = {}
         self.getconfig()
         self.timer = QtCore.QTimer(self)
         self.timer.setInterval(1000)
@@ -405,7 +406,7 @@ class PrizeDilog(Ui_Dialog, QtWidgets.QDialog):
                                     int((self._width * 0.6) * (9 / 16)))
         self.buttonBox.setGeometry(0, int((self._width * 0.6) * (9 / 16)), int(self._width * 0.6),
                                    int(self._height * 0.1))
-
+    
     def showMessage(self, message: str = '', Duration: int = 3):
         self.setVisible(True)
         if Duration <= 0:
@@ -437,12 +438,12 @@ class PrizeDilog(Ui_Dialog, QtWidgets.QDialog):
         self.show()
         self.loopcount = Duration
         self.timer.start()
-
+    
     def showPrize(self, prize: dict, picturepath: str, picture: QtGui.QPixmap):
         self.getconfig()
         self.setVisible(True)
         self.prize = prize
-        self.setWindowTitle(f'第{len(prize["persions"])+1}名{prize["name"]}中獎確認')
+        self.setWindowTitle(f'第{len(prize["persions"]) + 1}名{prize["name"]}中獎確認')
         self.picturename = picturepath
         self.contentbox.setPixmap(picture)
         self.contentbox.setScaledContents(True)
@@ -456,13 +457,15 @@ class PrizeDilog(Ui_Dialog, QtWidgets.QDialog):
                                   int(self._height * 0.1))
         self.comboBox.setVisible(False)
         self.show()
+    
     def accept(self):
         self.setVisible(False)
         self.configs['中獎人員名單'].append(self.picturename)
-        for idx,_ in enumerate(self.configs['奖项']):
-            if _['name'] == self.prize['name']:
+        for idx, _ in enumerate(self.configs['奖项']):
+            _: dict
+            if _['name'] == self.prize['name']:  # igore type
                 _['persions'].append(self.picturename)
-                _['count'] = _['count']-1
+                _['count'] = _['count'] - 1
                 self.prizecount = _['count']
                 self.prizeindex = idx
                 break
@@ -472,16 +475,16 @@ class PrizeDilog(Ui_Dialog, QtWidgets.QDialog):
         self.parent().showallprizes(self.configs['奖项'][self.prizeindex])
         if self.prizecount <= 0:
             super(PrizeDilog, self).accept()
-
+    
     def getconfig(self) -> dict:
         with open(r'config.json', 'r', encoding='utf-8') as f:
             self.configs = load(f)
         return self.configs
-
+    
     def setconfig(self):
         with open('config.json', 'w', encoding='utf-8') as f:
             dump(self.configs, f, ensure_ascii=False, indent=4)
-
+    
     def Autoclose(self):
         self.loopcount -= 1
         self.buttonBox.buttons()[0].setText(f'{self.loopcount}秒后自動關閉')
@@ -490,16 +493,15 @@ class PrizeDilog(Ui_Dialog, QtWidgets.QDialog):
             self.close()
 
 
-class PrizeForm(prizeshow.Ui_Dialog,QtWidgets.QDialog):
-    def __init__(self, screen_width, screen_height, prizeinfo:dict,parent=None):
+class PrizeForm(prizeshow.Ui_Dialog, QtWidgets.QDialog):
+    def __init__(self, screen_width, screen_height, prizeinfo: dict, parent=None):
         super(PrizeForm, self).__init__(parent)
         self.setupUi(self)
         self.bgm = QtMultimedia.QSoundEffect()
         self.bgm.setSource(QtCore.QUrl.fromLocalFile('runing.wav'))
         op = QtWidgets.QGraphicsOpacityEffect()
         op.setOpacity(0.5)
-
-
+        
         self.background.setGeometry(0, 0, screen_width, screen_height)
         self.background.setPixmap(QtGui.QPixmap('AE6.JPG'))
         self.background.setScaledContents(True)
@@ -514,10 +516,11 @@ class PrizeForm(prizeshow.Ui_Dialog,QtWidgets.QDialog):
             imageheight = int(imagewidth * (9 / 16))
             for idx, imagepath in enumerate(persions):
                 lable = QtWidgets.QLabel(self)
-
+                
                 if idx == 5 or idx == 6:
-                    lable.setGeometry(int(imagewidth * 0.01 + ((5 + idx) % 4) * (imagewidth * 1.005))
-                                      , int(screen_height * 0.15 + ((5 + idx) // 4) * (imageheight * 1.01)), imagewidth,
+                    lable.setGeometry(int(imagewidth * 0.01 + ((5 + idx) % 4) * (imagewidth * 1.005)),
+                                      int(screen_height * 0.15 + ((5 + idx) // 4) * (imageheight * 1.01)),
+                                      imagewidth,
                                       imageheight)
                 elif idx == 4:
                     lable.setGeometry(int(imagewidth * 1.05 + (idx % 4) * (imagewidth * 1.01)),
@@ -573,10 +576,10 @@ class PrizeForm(prizeshow.Ui_Dialog,QtWidgets.QDialog):
                                   imagewidth, imageheight)
                 lable.setPixmap(QtGui.QPixmap(imagepath))
                 lable.setScaledContents(True)
-
+        
         self.showFullScreen()
         # self.bgm.play()
-
+    
     def keyPressEvent(self, a0: QtGui.QKeyEvent) -> None:
         if a0.key() == QtCore.Qt.Key.Key_Space:
             # self.bgm.stop()
@@ -585,6 +588,7 @@ class PrizeForm(prizeshow.Ui_Dialog,QtWidgets.QDialog):
 
 if __name__ == '__main__':
     import sys
+    
     app = QtWidgets.QApplication(sys.argv)
     main_form = MainWindow()
     sys.exit(app.exec())

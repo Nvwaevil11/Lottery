@@ -26,12 +26,15 @@ class Ui_Dialog(object):
         self.prizetitle.setFont(font)
         self.prizetitle.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.prizetitle.setObjectName("prizetitle")
-
+        
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
-
+    
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
         self.background.setText(_translate("Dialog", "TextLabel"))
-        self.prizetitle.setText(_translate("Dialog", "<html><head/><body><p><span style=\" color:#000000;background-color:rgb(128,128,128)\">四等奖获奖名单</span></p></body></html>"))
+        self.prizetitle.setText(_translate("Dialog",
+                                           "<html><head/><body><p><span style=\" "
+                                           "color:#000000;background-color:rgb(128,128,128)\">"
+                                           "四等奖获奖名单</span></p></body></html>"))

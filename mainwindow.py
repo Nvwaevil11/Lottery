@@ -13,7 +13,8 @@ class Ui_MainForm(object):
     def setupUi(self, MainForm):
         MainForm.setObjectName("MainForm")
         MainForm.resize(1920, 1080)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.MinimumExpanding, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.MinimumExpanding,
+                                           QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(MainForm.sizePolicy().hasHeightForWidth())
@@ -48,7 +49,7 @@ class Ui_MainForm(object):
         self.frameimage.setMidLineWidth(1)
         self.frameimage.setText("")
         self.frameimage.setScaledContents(True)
-        self.frameimage.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter|QtCore.Qt.AlignmentFlag.AlignTop)
+        self.frameimage.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter | QtCore.Qt.AlignmentFlag.AlignTop)
         self.frameimage.setObjectName("frameimage")
         MainForm.setCentralWidget(self.CW)
         self.menubar = QtWidgets.QMenuBar(parent=MainForm)
@@ -86,15 +87,15 @@ class Ui_MainForm(object):
         self.menubar.addAction(self.menu_prizes.menuAction())
         self.menubar.addAction(self.menu_actions.menuAction())
         self.menubar.addAction(self.menu_help.menuAction())
-
+        
         self.retranslateUi(MainForm)
-        self.actionShow.triggered.connect(MainForm.showprizes) # type: ignore
-        self.actionlodimage.triggered.connect(MainForm.loadImage) # type: ignore
-        self.actionfullsrceen.triggered.connect(MainForm.fullscreen) # type: ignore
-        self.actionkuaijiejian.triggered.connect(MainForm.showhelp) # type: ignore
-        self.actionrun_stop.triggered.connect(MainForm.runorstop) # type: ignore
+        self.actionShow.triggered.connect(MainForm.showprizes)  # type: ignore
+        self.actionlodimage.triggered.connect(MainForm.loadImage)  # type: ignore
+        self.actionfullsrceen.triggered.connect(MainForm.fullscreen)  # type: ignore
+        self.actionkuaijiejian.triggered.connect(MainForm.showhelp)  # type: ignore
+        self.actionrun_stop.triggered.connect(MainForm.runorstop)  # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainForm)
-
+    
     def retranslateUi(self, MainForm):
         _translate = QtCore.QCoreApplication.translate
         MainForm.setWindowTitle(_translate("MainForm", "MainWindow"))
